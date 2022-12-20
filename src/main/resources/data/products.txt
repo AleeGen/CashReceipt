@@ -1,0 +1,17 @@
+[
+{"id":0,"description":"milk","price":1.56,"promotional":true},
+{"id":1,"description":"bread","price":0.87,"promotional":false},
+{"id":2,"description":"loaf","price":0.90,"promotional":false},
+{"id":3,"description":"chicken","price":6.45,"promotional":true},
+{"id":4,"description":"cookies","price":11.30,"promotional":true},
+{"id":5,"description":"eggs","price":3.05,"promotional":false},
+{"id":6,"description":"cottage cheese","price":1.45,"promotional":false},
+{"id":7,"description":"marshmallows","price":3.78,"promotional":false},
+{"id":8,"description":"sour cream","price":4.15,"promotional":true},
+{"id":9,"description":"onion","price":2.00,"promotional":false},
+{"id":10,"description":"cucumbers","price":1.80,"promotional":true},
+{"id":11,"description":"tomatoes","price":2.45,"promotional":true},
+{"id":12,"description":"watermelon","price":1.78,"promotional":false},
+{"id":13,"description":"melon","price":2.56,"promotional":false},
+{"id":14,"description":"garlic","price":1.40,"promotional":false}
+]

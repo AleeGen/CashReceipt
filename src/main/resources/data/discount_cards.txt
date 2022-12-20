@@ -1,0 +1,7 @@
+[
+{"number":1111,"discount":5},
+{"number":2222,"discount":10},
+{"number":3333,"discount":15},
+{"number":4444,"discount":20},
+{"number":5555,"discount":25}
+]

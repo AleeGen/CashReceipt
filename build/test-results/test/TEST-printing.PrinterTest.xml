@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="printing.PrinterTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-12-20T19:57:27" hostname="DESKTOP-7QNCR2I" time="0.047">
+  <properties/>
+  <testcase name="testBody" classname="printing.PrinterTest" time="0.015"/>
+  <testcase name="testFooter" classname="printing.PrinterTest" time="0.0"/>
+  <testcase name="testHeader" classname="printing.PrinterTest" time="0.016"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

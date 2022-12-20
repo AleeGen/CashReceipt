@@ -1,38 +1,33 @@
 package factory.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.DiscountCard;
 import factory.EntityFactory;
 import factory.MessageFactory;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
 public class DiscountCardFactory implements EntityFactory<Short, DiscountCard> {
-    private static final String PART_OF_KEY = "Card-";
-    private static final String PART_OF_VALUE = "%";
+
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public Map<Short, DiscountCard> getListEntity(String path) {
+    public Map<Short, DiscountCard> getMapEntity(String path) {
         Map<Short, DiscountCard> discountCards = new HashMap<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            Properties properties = new Properties();
-            properties.load(reader);
-            for (var o : properties.entrySet()) {
-                String key = ((String) o.getKey()).replace(PART_OF_KEY, "");
-                short number = Short.parseShort(key);
-                String value = ((String) o.getValue()).replace(PART_OF_VALUE, "");
-                double discount = Double.parseDouble(value) / 100;
-                discountCards.put(number, new DiscountCard(number, discount));
-            }
+        try (FileReader reader = new FileReader(path)) {
+            ObjectMapper mapper = new ObjectMapper();
+            DiscountCard[] discountCardsMas = mapper.readValue(reader, DiscountCard[].class);
+            Arrays.stream(discountCardsMas).forEach(discountCard -> discountCards.put(discountCard.getNumber(), discountCard));
         } catch (FileNotFoundException e) {
-            System.out.printf((MessageFactory.FILE_NOT_FOUND) + "%n", path);
+            logger.log(Level.ERROR, String.format(MessageFactory.ERROR_FILE_NOT_FOUND, path));
         } catch (IOException e) {
-            System.out.printf((MessageFactory.ERROR_READING) + "%n", path);
-        } catch (NumberFormatException e) {
-            System.out.printf((MessageFactory.INVALID_FORMAT) + "%n", path);
+            logger.log(Level.ERROR, String.format(MessageFactory.ERROR_READING, path));
         }
         return discountCards;
     }

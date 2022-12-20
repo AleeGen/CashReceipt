@@ -11,6 +11,7 @@ public class Organization {
         this.name = name;
         this.address = address;
         this.telephone = telephone;
+        this.email = email;
     }
 
     public String getName() {

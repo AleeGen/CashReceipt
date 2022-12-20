@@ -1,52 +1,42 @@
 package entity;
 
-import util.generation.NumberGenerator;
-
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
+import java.util.Optional;
 
 public class CashReceipt {
 
-    private long number;
+    private final List<Position> positions;
+    private final double cost;
     private Organization organization;
     private Date date;
-    private Map<Integer, Product> products;
+    private Optional<DiscountCard> discountCard;
     private double totalCost;
 
-    public CashReceipt() {
-        number = NumberGenerator.generate();
-    }
-
-    public long getNumber() {
-        return number;
+    private CashReceipt(List<Position> positions) {
+        this.positions = positions;
+        this.cost = calculate();
+        this.totalCost = cost;
     }
 
     public Organization getOrganization() {
         return organization;
     }
 
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
-    }
-
     public Date getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public List<Position> getPositions() {
+        return positions;
     }
 
-    public Map<Integer, Product> getProducts() {
-        return products;
+    public double getCost() {
+        return cost;
     }
 
-    public void setProducts(Map<Integer, Product> products) {
-        this.products = products;
-    }
-
-    public void setNumber(long number) {
-        this.number = number;
+    public Optional<DiscountCard> getDiscountCard() {
+        return discountCard;
     }
 
     public double getTotalCost() {
@@ -60,20 +50,45 @@ public class CashReceipt {
     @Override
     public String toString() {
         return "CashReceipt{" +
-                "number=" + number +
+                "positions=" + positions +
+                ", cost=" + cost +
                 ", organization=" + organization +
                 ", date=" + date +
-                ", products=" + products +
+                ", discountCard=" + discountCard +
                 ", totalCost=" + totalCost +
                 '}';
+    }
+
+    private double calculate() {
+        double result = 0;
+        for (Position position : positions) {
+            result += position.getTotalCost();
+        }
+        return result;
+    }
+
+    private void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
+
+    private void setDate(Date date) {
+        this.date = date;
+    }
+
+    private void setDiscountCard(Optional<DiscountCard> discountCard) {
+        this.discountCard = discountCard;
     }
 
     public static class CashReceiptBuilder {
 
         private Organization organization;
         private Date date;
-        private Map<Integer, Product> products;
-        private double totalCost;
+        private List<Position> positions;
+        private Optional<DiscountCard> discountCard;
+
+        public CashReceiptBuilder(List<Position> positions) {
+            this.positions = positions;
+        }
 
         public CashReceiptBuilder addOrganization(Organization organization) {
             this.organization = organization;
@@ -85,23 +100,19 @@ public class CashReceipt {
             return this;
         }
 
-        public CashReceiptBuilder addProducts(Map<Integer, Product> products) {
-            this.products = products;
-            return this;
-        }
-
-        public CashReceiptBuilder addTotalCost(double totalCost) {
-            this.totalCost = totalCost;
+        public CashReceiptBuilder addDiscountCard(Optional<DiscountCard> discountCard) {
+            this.discountCard = discountCard;
             return this;
         }
 
         public CashReceipt build() {
-            CashReceipt cashReceipt = new CashReceipt();
+            CashReceipt cashReceipt = new CashReceipt(positions);
             cashReceipt.setOrganization(organization);
             cashReceipt.setDate(date);
-            cashReceipt.setProducts(products);
+            cashReceipt.setDiscountCard(discountCard);
             return cashReceipt;
         }
 
     }
+
 }

@@ -1,41 +1,33 @@
 package factory.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import factory.MessageFactory;
 import factory.EntityFactory;
 import entity.Product;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
 public class ProductFactory implements EntityFactory<Integer, Product> {
-    private static final String SEPARATOR = "\\s*\\|\\s*";
+
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public Map<Integer, Product> getListEntity(String path) {
+    public Map<Integer, Product> getMapEntity(String path) {
         Map<Integer, Product> products = new HashMap<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            while (reader.ready()) {
-                String[] data = reader.readLine().split(SEPARATOR);
-                if (data.length != 4) {
-                    throw new NumberFormatException();
-                }
-                int id = Integer.parseInt(data[0]);
-                String description = data[1];
-                double price = Double.parseDouble(data[2]);
-                boolean promotional = Boolean.parseBoolean(data[3]);
-                Product product = new Product(id, description, price);
-                product.setPromotional(promotional);
-                products.put(id, product);
-            }
+        try (FileReader reader = new FileReader(path)) {
+            ObjectMapper mapper = new ObjectMapper();
+            Product[] productMas = mapper.readValue(reader, Product[].class);
+            Arrays.stream(productMas).forEach(product -> products.put(product.getId(), product));
         } catch (FileNotFoundException e) {
-            System.out.printf((MessageFactory.FILE_NOT_FOUND) + "%n", path);
+            logger.log(Level.ERROR, String.format(MessageFactory.ERROR_FILE_NOT_FOUND, path));
         } catch (IOException e) {
-            System.out.printf((MessageFactory.ERROR_READING) + "%n", path);
-        } catch (NumberFormatException e) {
-            System.out.printf((MessageFactory.INVALID_FORMAT) + "%n", path);
+            logger.log(Level.ERROR, String.format(MessageFactory.ERROR_READING, path));
         }
         return products;
     }
