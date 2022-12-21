@@ -1,8 +1,8 @@
 package factory.impl;
 
-import entity.Product;
 import factory.EntityFactory;
 import factory.MessageFactory;
+import entity.Product;
 import org.apache.logging.log4j.Level;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

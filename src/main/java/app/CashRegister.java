@@ -1,5 +1,6 @@
 package app;
 
+import entity.*;
 import exception.CashReceiptException;
 import factory.impl.DiscountCardDBFactory;
 import factory.impl.ProductDBFactory;
@@ -9,7 +10,6 @@ import printing.decorator.FooterDecorator;
 import printing.decorator.HeaderDecorator;
 import util.calculation.impl.DiscountCardCalculator;
 import util.calculation.impl.PromotionalProductsCalculator;
-import entity.*;
 import util.validation.Impl.OrderValidator;
 
 import java.io.BufferedWriter;

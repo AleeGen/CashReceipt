@@ -1,8 +1,8 @@
 package factory.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import factory.MessageFactory;
 import factory.EntityFactory;
+import factory.MessageFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Product;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

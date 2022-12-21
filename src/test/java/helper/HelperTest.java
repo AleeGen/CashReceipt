@@ -11,7 +11,7 @@ public class HelperTest {
 
     public static CashReceipt getCashReceipt() {
         Optional<DiscountCard> discountCard = Optional.of(new DiscountCard((short) 1111, 20));
-        List<Position> positions = new ArrayList<>() {{
+        List<Position> positions = new ArrayList<Position>() {{
             add(new Position(7, new Product(1, "product1", 1.35, true)));
             add(new Position(8, new Product(2, "product2", 2.47, false)));
             add(new Position(4, new Product(3, "product3", 5.10, true)));
