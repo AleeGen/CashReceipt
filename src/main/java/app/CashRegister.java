@@ -1,7 +1,11 @@
 package app;
 
 import entity.*;
+<<<<<<< Updated upstream
 import exception.CashReceiptException;
+=======
+import exception.OrderParserException;
+>>>>>>> Stashed changes
 import factory.impl.DiscountCardDBFactory;
 import factory.impl.ProductDBFactory;
 import printing.CashReceiptPrinter;
@@ -10,14 +14,23 @@ import printing.decorator.FooterDecorator;
 import printing.decorator.HeaderDecorator;
 import util.calculation.impl.DiscountCardCalculator;
 import util.calculation.impl.PromotionalProductsCalculator;
+<<<<<<< Updated upstream
 import util.validation.Impl.OrderValidator;
+=======
+import util.parsing.OrderParser;
+import util.parsing.impl.ConsoleOrderParser;
+import util.validation.impl.OrderValidator;
+>>>>>>> Stashed changes
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+<<<<<<< Updated upstream
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+=======
+>>>>>>> Stashed changes
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +43,7 @@ public class CashRegister {
     public static final String PATH_PRODUCTS = ClassLoader.getSystemResource("data/products.txt").getPath();
     public static final String PATH_DISCOUNT_CARDS = ClassLoader.getSystemResource("data/discount_cards.txt").getPath();
     public static final String CONFIG = "hibernate.cfg.xml";
+<<<<<<< Updated upstream
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -38,6 +52,10 @@ public class CashRegister {
     private static final String REGEX_FOR_CARD = "card-\\d{4}";
     private static final String SEPARATOR = "-";
 
+=======
+    private static final Logger logger = LogManager.getLogger();
+    private static final String EXIT_COMMAND = "exit";
+>>>>>>> Stashed changes
     private static final Map<Integer, Product> products;
     private static final Map<Short, DiscountCard> discountCards;
     private static final Organization organization;
@@ -60,8 +78,14 @@ public class CashRegister {
             while (!(data = scanner.nextLine()).equalsIgnoreCase(EXIT_COMMAND)) {
                 try {
                     if (new OrderValidator().validate(data)) {
+<<<<<<< Updated upstream
                         List<Position> positions = parseShoppingList(data);
                         Optional<DiscountCard> cardOptional = parseDiscountCard(data);
+=======
+                        OrderParser parser = new ConsoleOrderParser();
+                        List<Position> positions = parser.parseShoppingList(data, products);
+                        Optional<DiscountCard> cardOptional = parser.parseDiscountCard(data, discountCards);
+>>>>>>> Stashed changes
                         CashReceipt cashReceipt = new CashReceipt.CashReceiptBuilder(positions)
                                 .addOrganization(organization)
                                 .addDate(new Date())
@@ -75,7 +99,11 @@ public class CashRegister {
                     } else {
                         logger.log(Level.WARN, String.format(MessageCashRegister.INVALID_SHOPPING_LIST, data));
                     }
+<<<<<<< Updated upstream
                 } catch (CashReceiptException e) {
+=======
+                } catch (OrderParserException e) {
+>>>>>>> Stashed changes
                     logger.log(Level.WARN, e.getMessage());
                 }
                 logger.log(Level.INFO, MessageCashRegister.ENTER_REQUEST);
@@ -86,6 +114,7 @@ public class CashRegister {
         logger.log(Level.INFO, MessageCashRegister.END);
     }
 
+<<<<<<< Updated upstream
     private static List<Position> parseShoppingList(String data) throws CashReceiptException {
         List<Position> positions = new ArrayList<>();
         Matcher matcher = Pattern.compile(REGEX_FOR_PRODUCTS).matcher(data);
@@ -118,4 +147,6 @@ public class CashRegister {
         return cardOptional;
     }
 
+=======
+>>>>>>> Stashed changes
 }
