@@ -23,7 +23,7 @@ dependencies {
     implementation group: 'javax.transaction', name: 'jta', version: '1.1'
     implementation group: 'javax.activation', name: 'activation', version: '1.1.1'
     implementation group: 'org.teiid', name: 'teiid-hibernate-dialect', version: '16.0.0'
-    testImplementation group: 'org.testng', name: 'testng', version: '7.7.0'
+    implementation 'org.springframework:spring-webmvc:5.3.25'
 }
 
 test {
