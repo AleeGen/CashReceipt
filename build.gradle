@@ -3,29 +3,36 @@ plugins {
     id 'war'
 }
 
-group 'org.example'
+group 'ru.clevertec'
 version '1.0-SNAPSHOT'
 
+ext {
+    junitVersion = '5.8.1'
+}
+
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
 dependencies {
-    compileOnly('javax.servlet:javax.servlet-api:4.0.1')
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.1'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.19.0'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.19.0'
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.1'
-    implementation group: 'javax.transaction', name: 'jta', version: '1.1'
-    implementation group: 'javax.activation', name: 'activation', version: '1.1.1'
-    implementation group: 'org.teiid', name: 'teiid-hibernate-dialect', version: '16.0.0'
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
+    implementation 'org.postgresql:postgresql:42.5.1'
+    implementation 'javax.transaction:jta:1.1'
+    implementation 'javax.activation:activation:1.1.1'
+    implementation 'org.teiid:teiid-hibernate-dialect:16.0.0'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+    testImplementation 'org.mockito:mockito-core:5.1.1'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.1.1'
     implementation 'org.springframework:spring-webmvc:5.3.25'
 }
 
 test {
-    useTestNG()
+    useJUnitPlatform()
 }
