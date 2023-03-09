@@ -46,6 +46,18 @@ public class CashReceipt {
         this.totalCost = totalCost;
     }
 
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setDiscountCard(Optional<DiscountCard> discountCard) {
+        this.discountCard = discountCard;
+    }
+
     @Override
     public String toString() {
         return "CashReceipt{" +
@@ -66,17 +78,6 @@ public class CashReceipt {
         return result;
     }
 
-    private void setOrganization(Organization organization) {
-        this.organization = organization;
-    }
-
-    private void setDate(Date date) {
-        this.date = date;
-    }
-
-    private void setDiscountCard(Optional<DiscountCard> discountCard) {
-        this.discountCard = discountCard;
-    }
 
     public static class CashReceiptBuilder {
 

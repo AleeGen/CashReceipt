@@ -1,9 +1,9 @@
 package ru.clevertec.cheque.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
@@ -12,23 +12,23 @@ public class DiscountCard {
 
     @Id
     @Column(name = "number")
-    private short number;
+    private int number;
 
     @Column(name = "discount")
     private double discount;
 
     public DiscountCard(){}
 
-    public DiscountCard(short number, double discount) {
+    public DiscountCard(int number, double discount) {
         this.number = number;
         this.discount = discount;
     }
 
-    public short getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(short number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 

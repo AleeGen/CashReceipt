@@ -1,8 +1,33 @@
-# Cash Receipt
+<h1 align="center">Cash Receipt</h1>
 
-In this project Java 17, gradle 7.5, PostgreSQL, Servlet, Hibernate, Tomcat 9 are used.
-### There are two ways to launch the application:
-### 1. The console option. 
-It is launched via the main method of the CashRegister class. In this case, you will need to enter a request in the format "ItemId-quantity card-NNNN", where ItemId is the product id, quantity is the quantity of products, NNNN is the four-digit card number (the card may be missing). You can finish the work by entering "exit" command. Information about products and discount cards is taken from files with "resources/data/*" directory or from the database, depending on the object factory selection. The receipt is displayed on the console, as well as gets written to a file resources/data/cash_receipts.txt .
-### 2. The Web option.
-It is launched using Tomcat. In this case, you will need to enter a GET request in the format "http://localhost:8080/check?itemId=1&itemId=1itemId=2&card=1111". Information about products and discount cards is taken from the database, and the receipt is displayed on the html page.
+<h4 align="center">The application generates and displays a receipt of products on request </h4>
+
+
+              Java '17'         |         Gradle '7.6'          |         Spring Boot '3.0.4'         |         PostgreSQL          
+---
+### Stack:
+
+- [`org.springframework.boot:spring-boot-starter-data-jpa`]()
+- [`org.springframework.boot:spring-boot-starter-validation`]()
+- [`org.springframework.boot:spring-boot-starter-web`]()
+- [`org.springframework.boot:spring-boot-starter-test`]()
+- [`org.projectlombok:lombok:1.18.22`]()
+- [`org.assertj:assertj-core:3.24.2`]()
+- [`org.postgresql:postgresql`]()
+- [`com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.14.2`]()
+---
+
+### Quick start:
+
+java -jar cheque-0.0.1-SNAPSHOT.jar
+
+### Used example:
+
+> Format request "cheque/get?itemId-P&card-NNNN"
+> 
+> P is the product ID, NNNN is the four-digit card number
+> 
+> The card may be missing
+
+- #### Get: http://localhost:8080/cheque/get?itemId=1&itemId=1&itemId=2&card=3333
+![image](https://user-images.githubusercontent.com/100039077/224175445-efaa885e-6931-4839-946c-0862cb7cb217.png)
