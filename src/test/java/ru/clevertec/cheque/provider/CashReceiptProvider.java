@@ -1,7 +1,7 @@
 package ru.clevertec.cheque.provider;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.clevertec.cheque.entity.*;
 
 import java.io.FileReader;
@@ -17,7 +17,7 @@ public class CashReceiptProvider {
         List<Position> positions = getPosition();
         return List.of(
                 new CashReceipt.CashReceiptBuilder(List.of(positions.get(0), positions.get(1), positions.get(2)))
-                        .addDiscountCard(Optional.of(getCards().get((short) 1111)))
+                        .addDiscountCard(Optional.of(getCards().get(0)))
                         .addOrganization(new Organization("organization1", "address1", "email1", "phone1"))
                         .addDate(new Date(1))
                         .build(),
@@ -53,11 +53,11 @@ public class CashReceiptProvider {
         }
     }
 
-    public static Map<Short, DiscountCard> getCards() {
+    public static List<DiscountCard> getCards() {
         try (FileReader reader = new FileReader(PATH_DISCOUNT_CARDS)) {
             ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(reader, new TypeReference<List<DiscountCard>>() {
-            }).stream().collect(Collectors.toMap(DiscountCard::getNumber, o -> o));
+            return new ArrayList<>(mapper.readValue(reader, new TypeReference<List<DiscountCard>>() {
+            }));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
