@@ -1,0 +1,3 @@
+cache:
+  algorithm: lfu
+  capacity: 3
