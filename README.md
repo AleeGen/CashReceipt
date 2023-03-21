@@ -31,3 +31,5 @@ java -jar cheque-0.0.1-SNAPSHOT.jar
 
 - #### Get: http://localhost:8080/cheque/get?itemId=1&itemId=1&itemId=2&card=3333
 ![image](https://user-images.githubusercontent.com/100039077/224175445-efaa885e-6931-4839-946c-0862cb7cb217.png)
+- #### Example of output in dfp format:
+![image](https://user-images.githubusercontent.com/100039077/226687806-2689f851-8837-4ed3-83dd-99b425be6871.png)
