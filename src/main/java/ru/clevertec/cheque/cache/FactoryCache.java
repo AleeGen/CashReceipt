@@ -1,16 +1,17 @@
 package ru.clevertec.cheque.cache;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import ru.clevertec.cheque.entity.Human;
+import org.springframework.stereotype.Component;
+import ru.clevertec.cheque.cache.algorithm.Cache;
+import ru.clevertec.cheque.cache.algorithm.impl.LFUCache;
+import ru.clevertec.cheque.cache.algorithm.impl.LRUCache;
 
 /**
  * Factory for creating caches based on their capacity and algorithm
  *
  * @autor Alexey Leonenko
  */
-@Configuration
+@Component
 public class FactoryCache {
     /**
      * Returns the cache capacity, which is read by ${cache.capacity} from the /resources/application.yml
@@ -31,8 +32,7 @@ public class FactoryCache {
      *
      * @return a specific cache implementation
      */
-    @Bean
-    public Cache<Integer, Human> getCache() {
+    public Cache<Object, Object> getCache() {
         return switch (algorithm) {
             case "lfu" -> new LFUCache<>(capacity);
             default -> new LRUCache<>(capacity);

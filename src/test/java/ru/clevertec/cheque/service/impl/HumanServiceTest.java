@@ -6,12 +6,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.clevertec.cheque.dao.impl.HumanDAO;
 import ru.clevertec.cheque.entity.Human;
 import ru.clevertec.cheque.entity.impl.HumanBuilder;
-import ru.clevertec.cheque.dao.impl.CacheDAO;
 import ru.clevertec.cheque.exception.HumanException;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
@@ -20,7 +19,7 @@ import static org.mockito.Mockito.verify;
 class HumanServiceTest {
 
     @Mock
-    private CacheDAO dao;
+    private HumanDAO dao;
     @InjectMocks
     private HumanService service;
 

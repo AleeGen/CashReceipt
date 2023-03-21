@@ -16,7 +16,6 @@ public class HumanService implements EntityService<Human> {
 
     private static final String NOT_FOUND = "User with id=\"%d\" not found";
     @Autowired
-    @Qualifier(value = "cacheDAO")
     private EntityDAO<Human> dao;
 
     @Override

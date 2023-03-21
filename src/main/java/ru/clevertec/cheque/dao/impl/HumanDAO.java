@@ -1,6 +1,7 @@
 package ru.clevertec.cheque.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import ru.clevertec.cheque.cache.Cache;
 import ru.clevertec.cheque.dao.EntityDAO;
 import ru.clevertec.cheque.entity.Human;
 
@@ -22,27 +23,28 @@ public class HumanDAO implements EntityDAO<Human> {
                  5, new Human(5, "male", 35, "Vasya", false)
         ));
     }
-
+    @Cache
     @Override
     public List<Human> getAll() {
         return db.values().stream().toList();
     }
 
+    @Cache
     @Override
-    public Human getById(int id) {
+    public Human getById(Integer id) {
         return db.get(id);
     }
-
+    @Cache
     @Override
     public void save(Human human) {
         db.put(human.getId(), human);
     }
-
+    @Cache
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         db.remove(id);
     }
-
+    @Cache
     @Override
     public void update(Human human) {
         db.put(human.getId(), human);

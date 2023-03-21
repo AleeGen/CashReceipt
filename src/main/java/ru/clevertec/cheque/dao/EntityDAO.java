@@ -6,11 +6,11 @@ public interface EntityDAO<T> {
 
     List<T> getAll();
 
-    T getById(int id);
+    T getById(Integer id);
 
     void save(T t);
 
-    void delete(int id);
+    void delete(Integer id);
 
     void update(T t);
 }

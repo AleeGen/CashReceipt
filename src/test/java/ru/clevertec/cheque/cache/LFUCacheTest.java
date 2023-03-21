@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import ru.clevertec.cheque.cache.algorithm.Cache;
+import ru.clevertec.cheque.cache.algorithm.impl.LFUCache;
 import ru.clevertec.cheque.entity.Human;
 import ru.clevertec.cheque.entity.impl.HumanBuilder;
 
