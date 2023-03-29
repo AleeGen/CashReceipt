@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 import ru.clevertec.cheque.cache.algorithm.Cache;
-import ru.clevertec.cheque.entity.Human;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -61,9 +60,9 @@ public class CacheAspect {
             }
             result = o;
         } else if (args[0].getClass() == clazzArg) {
-            Object o = joinPoint.proceed();
-            Human human = (Human) args[0];
-            cache.put(human.getId(), human);
+            joinPoint.proceed();
+            Object o = args[0];
+            cache.put(methodGetId.invoke(o), o);
             result = o;
         } else {
             Object o = joinPoint.proceed();

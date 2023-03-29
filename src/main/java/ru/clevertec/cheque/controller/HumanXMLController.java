@@ -21,7 +21,7 @@ public class HumanXMLController {
     @Autowired
     private HumanService humanService;
 
-    @GetMapping(value = "/")
+    @GetMapping
     public ResponseEntity<List<Human>> get() {
         return new ResponseEntity<>(humanService.getAll(), HttpStatus.OK);
     }
@@ -31,7 +31,7 @@ public class HumanXMLController {
         return new ResponseEntity<>(humanService.getById(id), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/")
+    @PostMapping
     public ResponseEntity<Human> save(@Valid @RequestBody Human human) {
         humanService.save(human);
         return new ResponseEntity<>(human, HttpStatus.CREATED);
