@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.clevertec.cheque.cache.Cache;
 import ru.clevertec.cheque.dao.EntityDAO;
 import ru.clevertec.cheque.entity.DiscountCard;
 
@@ -21,24 +22,28 @@ public class DiscountCardDAO implements EntityDAO<DiscountCard> {
         return session.createQuery(QUERY).list();
     }
 
+    @Cache(id = "number")
     @Override
-    public DiscountCard getById(int id) {
+    public DiscountCard getById(Integer id) {
         Session session = entityManager.unwrap(Session.class);
         return session.get(DiscountCard.class, id);
     }
 
+    @Cache(id = "number")
     @Override
     public void save(DiscountCard discountCard) {
         Session session = entityManager.unwrap(Session.class);
         session.save(discountCard);
     }
 
+    @Cache(id = "number")
     @Override
-    public void delete(int number) {
+    public void delete(Integer number) {
         Session session = entityManager.unwrap(Session.class);
         session.createQuery(DELETE).setParameter("number", number).executeUpdate();
     }
 
+    @Cache(id = "number")
     @Override
     public void update(DiscountCard discountCard) {
         Session session = entityManager.unwrap(Session.class);

@@ -29,6 +29,7 @@ dependencies {
 	testImplementation 'org.assertj:assertj-core:3.24.2'
 	implementation 'org.postgresql:postgresql'
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.14.2'
+	runtimeOnly 'org.aspectj:aspectjweaver:1.9.19'
 }
 
 tasks.named('test') {

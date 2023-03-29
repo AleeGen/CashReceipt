@@ -17,6 +17,7 @@ import ru.clevertec.cheque.service.CashReceiptService;
 @RestController
 @RequestMapping("/cheque")
 public class CashReceiptController {
+
     @Autowired
     private CashReceiptService cashReceiptService;
 
