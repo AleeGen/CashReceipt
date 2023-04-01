@@ -28,14 +28,14 @@ import java.util.*;
 
 @Service
 public class CashReceiptService {
-    private static final String BACKGROUND = "src/main/resources/Clevertec_Template.pdf";
-    private static final Organization organization;
+    private final String BACKGROUND = "src/main/resources/Clevertec_Template.pdf";
+    private final Organization organization;
     @Autowired
     private ProductDAO productDao;
     @Autowired
     private DiscountCardDAO discountCardDao;
 
-    static {
+    {
         organization = new Organization(
                 "Clevertec",
                 "90 Dubninskaya Street, Moscow, Russia",

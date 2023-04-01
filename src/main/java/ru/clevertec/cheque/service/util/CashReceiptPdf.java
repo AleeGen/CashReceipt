@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class CashReceiptPdf {
+
     private static final DecimalFormat FORMAT = new DecimalFormat("#0.00");
     private static final String HEADER = "CASH RECEIPT";
     private static final String DISCOUNT = "Discount: ";
