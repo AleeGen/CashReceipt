@@ -1,8 +1,7 @@
-package ru.clevertec.cheque.provider;
+package ru.clevertec.cheque.entity;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.clevertec.cheque.entity.*;
 
 import java.io.FileReader;
 import java.io.IOException;

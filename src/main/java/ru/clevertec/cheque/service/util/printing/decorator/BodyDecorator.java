@@ -34,4 +34,5 @@ public class BodyDecorator extends PrinterDecorator {
         String past = super.print(cashReceipt);
         return past + body;
     }
+
 }

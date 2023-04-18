@@ -1,9 +1,12 @@
 package ru.clevertec.cheque.entity;
 
+import lombok.ToString;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@ToString
 public class CashReceipt {
     private final List<Position> positions;
     private final double cost;
@@ -58,18 +61,6 @@ public class CashReceipt {
         this.discountCard = discountCard;
     }
 
-    @Override
-    public String toString() {
-        return "CashReceipt{" +
-                "positions=" + positions +
-                ", cost=" + cost +
-                ", organization=" + organization +
-                ", date=" + date +
-                ", discountCard=" + discountCard +
-                ", totalCost=" + totalCost +
-                '}';
-    }
-
     private double calculate() {
         double result = 0;
         for (Position position : positions) {
@@ -77,7 +68,6 @@ public class CashReceipt {
         }
         return result;
     }
-
 
     public static class CashReceiptBuilder {
 
@@ -112,7 +102,6 @@ public class CashReceipt {
             cashReceipt.setDiscountCard(discountCard);
             return cashReceipt;
         }
-
     }
 
 }

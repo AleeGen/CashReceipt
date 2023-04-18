@@ -1,6 +1,5 @@
 package ru.clevertec.cheque.cache.algorithm.impl;
 
-
 import ru.clevertec.cheque.cache.algorithm.Cache;
 
 import java.util.HashMap;

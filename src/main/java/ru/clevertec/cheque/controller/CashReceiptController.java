@@ -1,8 +1,6 @@
 package ru.clevertec.cheque.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,26 +14,28 @@ import ru.clevertec.cheque.service.CashReceiptService;
 
 import java.io.IOException;
 
-@RequiredArgsConstructor
 @RestController
-@RequestMapping("/cheque")
+@RequestMapping("/cashReceipt")
 public class CashReceiptController {
 
-    @Autowired
-    private CashReceiptService cashReceiptService;
+    private final CashReceiptService cashReceiptService;
 
-    @GetMapping("/get")
-    public String getCheque(@RequestParam Integer[] itemId, @RequestParam(required = false) Integer card) {
-        CashReceipt cashReceipt = cashReceiptService.getCashReceipt(itemId, card);
+    public CashReceiptController(CashReceiptService cashReceiptService) {
+        this.cashReceiptService = cashReceiptService;
+    }
+
+    @GetMapping("/txt")
+    public String getCheque(@RequestParam Integer[] id, @RequestParam(required = false) Integer card) {
+        CashReceipt cashReceipt = cashReceiptService.getCashReceipt(id, card);
         return new FooterDecorator(new BodyDecorator(new HeaderDecorator(new CashReceiptPrinter()))).print(cashReceipt);
     }
 
-    @GetMapping("/getPdf")
-    public void getChequePdf(@RequestParam Integer[] itemId,
+    @GetMapping("/pdf")
+    public void getChequePdf(@RequestParam Integer[] id,
                                  @RequestParam(required = false) Integer card,
                                  HttpServletResponse response) throws IOException {
         response.setContentType("application/pdf");
-        CashReceipt cashReceipt = cashReceiptService.getCashReceipt(itemId, card);
+        CashReceipt cashReceipt = cashReceiptService.getCashReceipt(id, card);
         byte[] pdf = cashReceiptService.getPdfCashReceipt(cashReceipt);
         response.getOutputStream().write(pdf);
     }

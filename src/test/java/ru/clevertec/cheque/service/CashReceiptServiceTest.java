@@ -7,14 +7,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.clevertec.cheque.dao.impl.DiscountCardDAO;
-import ru.clevertec.cheque.dao.impl.ProductDAO;
+import ru.clevertec.cheque.dao.CardRepository;
+import ru.clevertec.cheque.dao.ProductRepository;
 import ru.clevertec.cheque.entity.CashReceipt;
-import ru.clevertec.cheque.entity.Product;
+import ru.clevertec.cheque.entity.impl.ProductBuilder;
 import ru.clevertec.cheque.exception.CashReceiptException;
-import ru.clevertec.cheque.provider.CashReceiptProvider;
+import ru.clevertec.cheque.entity.CashReceiptProvider;
 import ru.clevertec.cheque.service.util.calculator.impl.DiscountCardCalculator;
 import ru.clevertec.cheque.service.util.calculator.impl.PromotionalProductsCalculator;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -24,9 +26,9 @@ import static org.mockito.Mockito.doReturn;
 @ExtendWith(MockitoExtension.class)
 class CashReceiptServiceTest {
     @Mock
-    private DiscountCardDAO cardDao;
+    private CardRepository cardRep;
     @Mock
-    private ProductDAO productDao;
+    private ProductRepository productRep;
     @InjectMocks
     private CashReceiptService service;
     private static CashReceipt cashReceipt;
@@ -44,10 +46,10 @@ class CashReceiptServiceTest {
 
     @Test
     void checkGetCashReceiptShouldExpected() throws CashReceiptException {
-        doReturn(cashReceipt.getPositions().get(0).getProduct()).when(productDao).getById(1);
-        doReturn(cashReceipt.getPositions().get(1).getProduct()).when(productDao).getById(2);
-        doReturn(cashReceipt.getPositions().get(2).getProduct()).when(productDao).getById(3);
-        doReturn(cashReceipt.getDiscountCard().get()).when(cardDao).getById(numberCard);
+        doReturn(Optional.of(cashReceipt.getPositions().get(0).getProduct())).when(productRep).findById(1);
+        doReturn(Optional.of(cashReceipt.getPositions().get(1).getProduct())).when(productRep).findById(2);
+        doReturn(Optional.of(cashReceipt.getPositions().get(2).getProduct())).when(productRep).findById(3);
+        doReturn(Optional.of(cashReceipt.getDiscountCard().get())).when(cardRep).findById(numberCard);
         CashReceipt actual = service.getCashReceipt(itemId, numberCard);
         assertAll(
                 () -> assertThat(actual.getCost()).isEqualTo(cashReceipt.getCost()),
@@ -63,7 +65,7 @@ class CashReceiptServiceTest {
         void nonExistentProduct() {
             int nonExistentId = -1;
             int anyCard = 1111;
-            doReturn(null).when(productDao).getById(nonExistentId);
+            doReturn(Optional.empty()).when(productRep).findById(nonExistentId);
             assertThrows(CashReceiptException.class, () -> service.getCashReceipt(new Integer[]{nonExistentId}, anyCard));
         }
 
@@ -71,8 +73,8 @@ class CashReceiptServiceTest {
         void nonExistentCard() {
             int anyProduct = 1;
             int nonExistentCard = 1000;
-            doReturn(new Product()).when(productDao).getById(anyProduct);
-            doReturn(null).when(cardDao).getById(nonExistentCard);
+            doReturn(Optional.of(ProductBuilder.aProduct().build())).when(productRep).findById(anyProduct);
+            doReturn(Optional.empty()).when(cardRep).findById(nonExistentCard);
             assertThrows(CashReceiptException.class, () -> service.getCashReceipt(new Integer[]{anyProduct}, nonExistentCard));
         }
     }

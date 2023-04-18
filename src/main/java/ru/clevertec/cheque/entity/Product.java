@@ -1,8 +1,18 @@
 package ru.clevertec.cheque.entity;
 
 import jakarta.persistence.*;
-import java.util.Objects;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "product")
 public class Product {
@@ -12,80 +22,16 @@ public class Product {
     @Column(name = "id")
     private int id;
 
+    @NotBlank
+    @Length(max = 100)
     @Column(name = "description")
     private String description;
 
+    @Min(0)
     @Column(name = "price")
     private double price;
 
     @Column(name = "promotional")
     private boolean promotional;
 
-    public Product() {
-    }
-
-    public Product(int id, String description, double price, boolean promotional) {
-        this.id = id;
-        this.description = description;
-        this.price = price;
-        this.promotional = promotional;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public boolean isPromotional() {
-        return promotional;
-    }
-
-    public void setPromotional(boolean promotional) {
-        this.promotional = promotional;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return id == product.id
-                && Double.compare(product.price, price) == 0
-                && promotional == product.promotional
-                && description.equals(product.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, price, promotional);
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", promotional=" + promotional +
-                '}';
-    }
 }

@@ -9,9 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.clevertec.cheque.entity.CashReceipt;
-import ru.clevertec.cheque.service.util.printing.decorator.HeaderDecorator;
-import ru.clevertec.cheque.service.util.printing.decorator.PrinterDecorator;
-import ru.clevertec.cheque.provider.CashReceiptProvider;
+import ru.clevertec.cheque.entity.CashReceiptProvider;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -6,8 +6,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import ru.clevertec.cheque.cache.algorithm.Cache;
 import ru.clevertec.cheque.cache.algorithm.impl.LFUCache;
-import ru.clevertec.cheque.entity.Human;
-import ru.clevertec.cheque.entity.impl.HumanBuilder;
+import ru.clevertec.cheque.entity.Product;
+import ru.clevertec.cheque.entity.impl.ProductBuilder;
 
 import java.util.List;
 
@@ -15,16 +15,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LFUCacheTest {
 
-    private static Cache<Integer, Human> cache;
+    private static Cache<Integer, Product> cache;
     private static int capacity;
 
     @BeforeAll
     static void init() {
         capacity = 3;
         cache = new LFUCache<>(capacity);
-        List.of(HumanBuilder.aHuman().withId(1).build(),
-                        HumanBuilder.aHuman().withId(2).build(),
-                        HumanBuilder.aHuman().withId(3).build())
+        List.of(ProductBuilder.aProduct().withId(1).build(),
+                        ProductBuilder.aProduct().withId(2).build(),
+                        ProductBuilder.aProduct().withId(3).build())
                 .forEach(h -> cache.put(h.getId(), h));
     }
 
@@ -40,20 +40,20 @@ class LFUCacheTest {
             "3,0", "4,1", "2,0", "5,4", "1,5"
     })
     void checkCacheShouldStoreCertainElements(int nextId, int remoteId) {
-        Human nextHuman = HumanBuilder.aHuman().withId(nextId).build();
-        cache.put(nextId, nextHuman);
-        Human remoteHuman = cache.get(remoteId);
-        assertThat(remoteHuman).isNull();
+        Product nextProduct = ProductBuilder.aProduct().withId(nextId).build();
+        cache.put(nextId, nextProduct);
+        Product remoteProduct = cache.get(remoteId);
+        assertThat(remoteProduct).isNull();
     }
 
     @Test
     void delete() {
-        Human human = HumanBuilder.aHuman().withId(1).build();
-        cache.put(human.getId(), human);
-        boolean exist = cache.get(human.getId()) == null;
+        Product product = ProductBuilder.aProduct().withId(1).build();
+        cache.put(product.getId(), product);
+        boolean exist = cache.get(product.getId()) == null;
         assertThat(exist).isFalse();
-        cache.delete(human.getId());
-        exist = cache.get(human.getId()) == null;
+        cache.delete(product.getId());
+        exist = cache.get(product.getId()) == null;
         assertThat(exist).isTrue();
     }
 

@@ -3,8 +3,9 @@ package ru.clevertec.cheque.exception.responce;
 import lombok.Data;
 
 @Data
-public class HumanErrorResponse {
-    private int status;
+public abstract class AbstractErrorResponse {
+
     private String message;
     private long timeStamp;
+
 }
