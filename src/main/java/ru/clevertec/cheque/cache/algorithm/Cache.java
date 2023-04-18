@@ -33,4 +33,5 @@ public interface Cache<K, V> {
      * @return capacity cache
      */
     int getCapacity();
+
 }

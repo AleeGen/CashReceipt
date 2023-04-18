@@ -3,13 +3,14 @@ package ru.clevertec.cheque.service;
 import java.util.List;
 
 public interface EntityService<T> {
-    List<T> getAll();
+    List<T> findAll(Integer page, Integer size);
 
-    T getById(int id);
+    T findById(int id);
 
-    void save(T t);
+    T save(T t);
 
-    void delete(int id);
+    void deleteById(int id);
 
-    void update(T t);
+    T update(T t);
+
 }

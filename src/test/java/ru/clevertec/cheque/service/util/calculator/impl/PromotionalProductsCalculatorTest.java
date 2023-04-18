@@ -6,9 +6,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 import ru.clevertec.cheque.entity.CashReceipt;
-import ru.clevertec.cheque.provider.CashReceiptProvider;
+import ru.clevertec.cheque.entity.CashReceiptProvider;
 import ru.clevertec.cheque.service.util.calculator.CashReceiptCalculator;
-import ru.clevertec.cheque.service.util.calculator.impl.PromotionalProductsCalculator;
 
 import java.util.List;
 import java.util.stream.Stream;

@@ -11,12 +11,11 @@ import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Div;
 import com.itextpdf.layout.properties.TextAlignment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.clevertec.cheque.dao.CardRepository;
+import ru.clevertec.cheque.dao.ProductRepository;
 import ru.clevertec.cheque.service.util.CashReceiptPdf;
-import ru.clevertec.cheque.dao.impl.DiscountCardDAO;
-import ru.clevertec.cheque.dao.impl.ProductDAO;
 import ru.clevertec.cheque.entity.*;
 import ru.clevertec.cheque.exception.CashReceiptException;
 import ru.clevertec.cheque.service.util.calculator.impl.DiscountCardCalculator;
@@ -30,47 +29,23 @@ import java.util.*;
 public class CashReceiptService {
     private final String BACKGROUND = "src/main/resources/Clevertec_Template.pdf";
     private final Organization organization;
-    @Autowired
-    private ProductDAO productDao;
-    @Autowired
-    private DiscountCardDAO discountCardDao;
+    private final ProductRepository productRep;
+    private final CardRepository cardRep;
 
-    {
-        organization = new Organization(
-                "Clevertec",
-                "90 Dubninskaya Street, Moscow, Russia",
-                "info@clevertec.ru",
-                "+7 (499) 653 94 51");
+    public CashReceiptService(ProductRepository productRep, CardRepository cardRep) {
+        this.productRep = productRep;
+        this.cardRep = cardRep;
+        organization = Organization.builder()
+                .name("Clevertec")
+                .address("90 Dubninskaya Street, Moscow, Russia")
+                .email("info@clevertec.ru")
+                .telephone("+7 (499) 653 94 51").build();
     }
 
     @Transactional
-    public CashReceipt getCashReceipt(Integer[] itemId, Integer numberCard) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for (Integer id : itemId) {
-            if (map.containsKey(id)) {
-                map.put(id, map.get(id) + 1);
-            } else {
-                map.put(id, 1);
-            }
-        }
-        List<Position> positions = new ArrayList<>();
-        for (Integer id : map.keySet()) {
-            Product product = productDao.getById(id);
-            if (product == null) {
-                throw new CashReceiptException(String.format("Product with id = %d not found", id));
-            }
-            positions.add(new Position(map.get(id), product));
-        }
-        Optional<DiscountCard> card;
-        if (numberCard == null) {
-            card = Optional.empty();
-        } else {
-            DiscountCard c = discountCardDao.getById(numberCard);
-            if (c == null) {
-                throw new CashReceiptException(String.format("Discount card with number = %d not found", numberCard));
-            }
-            card = Optional.of(c);
-        }
+    public CashReceipt getCashReceipt(Integer[] productId, Integer numberCard) {
+        List<Position> positions = getPositions(productId);
+        Optional<DiscountCard> card = getCard(numberCard);
         CashReceipt cashReceipt = new CashReceipt.CashReceiptBuilder(positions)
                 .addDiscountCard(card)
                 .addOrganization(organization)
@@ -98,6 +73,30 @@ public class CashReceiptService {
             return baos.toByteArray();
         } catch (IOException e) {
             throw new CashReceiptException("Error when creating pdf");
+        }
+    }
+
+    private List<Position> getPositions(Integer[] productId) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (Integer id : productId) {
+            var plug = map.containsKey(id) ? map.put(id, map.get(id) + 1) : map.put(id, 1);
+        }
+        List<Position> positions = new ArrayList<>();
+        for (Integer id : map.keySet()) {
+            Product product = productRep.findById(id).orElseThrow(() ->
+                    new CashReceiptException(String.format("Product with id = %d not found", id)));
+            positions.add(new Position(map.get(id), product));
+        }
+        return positions;
+    }
+
+    private Optional<DiscountCard> getCard(Integer numberCard) {
+        if (numberCard == null) {
+            return Optional.empty();
+        } else {
+            DiscountCard c = cardRep.findById(numberCard).orElseThrow(() ->
+                    new CashReceiptException(String.format("Discount card with number = %d not found", numberCard)));
+            return Optional.of(c);
         }
     }
 

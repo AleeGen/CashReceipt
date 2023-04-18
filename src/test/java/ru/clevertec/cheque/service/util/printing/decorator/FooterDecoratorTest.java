@@ -8,9 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.clevertec.cheque.entity.CashReceipt;
-import ru.clevertec.cheque.service.util.printing.decorator.FooterDecorator;
-import ru.clevertec.cheque.service.util.printing.decorator.PrinterDecorator;
-import ru.clevertec.cheque.provider.CashReceiptProvider;
+import ru.clevertec.cheque.entity.CashReceiptProvider;
 import ru.clevertec.cheque.service.util.calculator.impl.DiscountCardCalculator;
 import ru.clevertec.cheque.service.util.calculator.impl.PromotionalProductsCalculator;
 
@@ -55,6 +53,5 @@ class FooterDecoratorTest {
         expected = expected.replaceAll("\r\n", "");
         assertThat(actual).isEqualTo(expected);
     }
-
 
 }

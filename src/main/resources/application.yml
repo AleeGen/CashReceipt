@@ -1,3 +1,16 @@
+spring:
+  liquibase:
+    enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cash_receipt
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: none
 cache:
   algorithm: lfu
   capacity: 3
+pagination:
+  page: 0
+  size: 3
